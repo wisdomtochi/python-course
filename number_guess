@@ -1,0 +1,49 @@
+import random
+import math
+
+# Get valid number
+def get_valid_number(prompt):
+    while True:
+        try:
+            user_input = int(input(prompt))
+            return user_input
+        except ValueError:
+            print("Please input a valid number")
+
+# Check if the number is in the specified range
+def get_number_in_range(start, end):
+    while True:
+        try:
+            number = int(input(f"Guess a number between {start} and {end}: "))
+
+            if number >= start and number <= end:
+                return number
+            else:
+                print(f"Select a number with {start} and {end}")
+        except ValueError:
+            print(f"Select a number with {start} and {end}")
+
+def main():
+    print("Number Guessing Game")
+    print("Select the range of numbers you want to guess")
+
+    start = get_valid_number("Where do you want to start from? ")
+    end = get_valid_number("Where do you want to end at? ")
+
+    if start > end:
+        start, end = end, start
+        print(f"Since {start} is greater than {end}, I switched their places")
+
+    guess = get_number_in_range(start, end)
+    print(f"You guessed {guess}")
+
+    random_number = random.randint(start, end)
+    print(f"The random number is {random_number}")
+
+    if guess == random_number:
+        print("You guessed correctly!")
+    else:
+        print("You guessed wrongly. Try again")
+
+if __name__ == "__main__":
+    main()
