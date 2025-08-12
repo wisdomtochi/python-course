@@ -57,13 +57,12 @@ def failure_responses(guess, number):
             print(f"Select a number within the range")
 
 def main():
-    print("🎮 Hey there! Welcome to the Number Guessing Challenge! 🎮")
+    print("Hey there! Welcome to the Number Guessing Challenge!")
     print()
     print("Here's how it works:")
     print("→ You pick a range of numbers (like 1 to 100)")
     print("→ I'll secretly pick a random number in that range")
     print("→ You get three shots to guess what number I'm thinking of!")
-    print("→ Can you outsmart the computer? Let's find out!")
     print()
     print("First things first - what range should we use?")
 
