@@ -1,0 +1,108 @@
+import random
+
+# Get valid number
+def get_valid_number(prompt):
+    while True:
+        try:
+            user_input = int(input(prompt))
+            return user_input
+        except ValueError:
+            print("Please input a valid number")
+
+# Check if the number is in the specified range
+def get_number_in_range(start, end, guess=None):
+    while True:
+        try:
+            number=None
+            if guess==None:
+                number = int(input(f"Guess a number between {start} and {end}: "))
+            else:
+                number = guess
+
+            if number >= start and number <= end:
+                return number
+            else:
+                print(f"Select a number between {start} and {end}")
+        except ValueError:
+            print(f"Select a number between {start} and {end}")
+    
+def success_responses(trials):
+    if trials == 1:
+        return "Nice, you guessed correctly"
+    elif trials == 2:
+        return "Successful, you did it!!!"
+    elif trials == 3:
+        return "Wheeew, that was close. Congrats"
+    else:
+        return "Oops, better luck next time"
+
+def failure_responses(guess, number):
+    while True:
+        try:
+            #Upper bounds
+            if number - guess >= 1 and number - guess <= 10:
+                return "Guess a little higher"
+            elif number - guess >= 11 and number - guess <= 40:
+                return "Low! Guess higher"
+            elif number - guess >= 41:
+                return "Too Low! Guess higher"
+            #Lower bounds
+            elif guess - number >= 1 and guess - number <= 10:
+                return "Guess a little lower"
+            elif guess - number >= 11 and guess - number <= 40:
+                return "High! Guess lower"
+            elif guess - number >= 41:
+                return "Too High! Guess lower"
+        except:
+            print(f"Select a number within the range")
+
+def main():
+    print("Hey there! Welcome to the Number Guessing Challenge!")
+    print()
+    print("Here's how it works:")
+    print("→ You pick a range of numbers (like 1 to 100)")
+    print("→ I'll secretly pick a random number in that range")
+    print("→ You get three shots to guess what number I'm thinking of!")
+    print()
+    print("First things first - what range should we use?")
+
+    start = get_valid_number("Where do you want to start from? ")
+    end = get_valid_number("Where do you want to end at? ")
+
+    if start > end:
+        start, end = end, start
+        print(f"Since {start} is greater than {end}, I switched their places")
+
+    guess = get_number_in_range(start, end)
+
+    random_number = random.randint(start, end)
+
+    if guess == random_number:
+        print("You guessed correctly!")
+    else:
+        response = failure_responses(guess, random_number)
+        print(response)
+
+        trial_count = 1
+
+        while trial_count <= 3:
+            trial_count += 1
+
+            if trial_count > 3:
+                print(f"Sorry, the number was {random_number}.")
+                break
+
+            new_guess = get_valid_number("Try again: ")
+            new_guess = get_number_in_range(start, end, new_guess)
+
+            if new_guess == random_number:
+                success_response = success_responses(trial_count)
+                print(success_response)
+                break
+            
+            if trial_count < 3:
+                response = failure_responses(new_guess, random_number)
+                print(response)
+
+if __name__ == "__main__":
+    main()
